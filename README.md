@@ -2,11 +2,9 @@
 
 Encode font files as CSS using [Gulp](http://gulpjs.com).
 
-This plugin draws inspiration from [localFont](http://jaicab.com/localFont/) by Jaime Caballero.
+This plugin automates the conversion of font files into a series of `@font-face` declarations containing each font encoded in base64.  It draws inspiration from [localFont](http://jaicab.com/localFont/) by Jaime Caballero.
 
-This plugin automates the conversion of font files into a series of `@font-face` declarations containing each font encoded in base64.
-
-The resulting CSS files are then used to implement `localStorage` caching of web fonts, using a deferred loading script such as [this one used by Smashing Magazine](https://gist.github.com/hdragomir/8f00ce2581795fd7b1b7).
+The resulting CSS files are then used to implement `localStorage` caching of web fonts, using a deferred loading script such as [this one employed by Smashing Magazine](https://gist.github.com/hdragomir/8f00ce2581795fd7b1b7).
 
 ## Install
 
@@ -35,9 +33,9 @@ gulp.task('fonts', function() {
 
 `<family>[-<weight>][-<style>].<extension>`
 
-Font weight is one of `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`. You may also provide a [commonly used weight name](http://www.w3.org/TR/css3-fonts/#font-weight-numeric-values) (except `normal`) that maps to one of these values.
+Font weight should be one of `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`. You may also provide a [commonly used weight name](http://www.w3.org/TR/css3-fonts/#font-weight-numeric-values) (except `normal`) that maps to one of these values.
 
-Font style is one of `normal`, `italic` or `oblique`.
+Font style should be one of `normal`, `italic` or `oblique`.
 
 For example, the following are valid names:
 
