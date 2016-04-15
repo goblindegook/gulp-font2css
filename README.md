@@ -17,7 +17,7 @@ $ npm install --save-dev gulp-font2css
 ```js
 var gulp     = require('gulp')
 var concat   = require('gulp-concat')
-var font2css = require('gulp-font2css')
+var font2css = require('gulp-font2css').default
 
 gulp.task('fonts', function() {
   return gulp.src('src/fonts/**/*.{otf,ttf,woff,woff2}')
