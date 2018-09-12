@@ -2,8 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import test from 'ava'
 import css from 'css'
-import util from 'gulp-util'
 import font2css from '../src'
+import Vinyl from 'vinyl'
 
 // HELPER FUNCTIONS
 
@@ -14,10 +14,10 @@ import font2css from '../src'
  * @return {Object}          File object.
  */
 function createFile(filepath, contents = '') {
-  return new util.File({
+  return new Vinyl({
     base:     path.dirname(filepath),
     path:     filepath,
-    contents: new Buffer(contents),
+    contents: new Buffer.from(contents),
   })
 }
 

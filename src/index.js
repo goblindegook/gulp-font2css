@@ -6,7 +6,8 @@ import fontWeightKeywords from 'css-font-weight-keywords'
 import fontWeightNames from 'css-font-weight-names'
 import mime from 'mime'
 import through from 'through2'
-import util from 'gulp-util'
+import replaceExt from 'replace-ext'
+import PluginError from 'plugin-error'
 
 /**
  * Extract the `font-family` from the font's file name.
@@ -69,8 +70,8 @@ function guessFontWeight(basename) {
  * @return {String}      Base64-encoded contents inside a `data:` URL.
  */
 function getSrc(file) {
-  const encodedContents = new Buffer(file.contents).toString('base64')
-  return `src:url(data:${mime.lookup(file.path)};charset=utf-8;base64,${encodedContents});`
+  const encodedContents = new Buffer.from(file.contents).toString('base64')
+  return `src:url(data:${mime.getType(file.path)};charset=utf-8;base64,${encodedContents});`
 }
 
 /**
@@ -90,7 +91,7 @@ function font2css() {
     }
 
     if (file.isStream()) {
-      this.emit('error', new util.PluginError('gulp-font2css', 'Streaming is not supported'))
+      this.emit('error', new PluginError('gulp-font2css', 'Streaming is not supported'))
       return callback()
     }
 
@@ -106,8 +107,8 @@ function font2css() {
 
       const contents = `@font-face{${attributes.join('')}}`
 
-      file.contents = new Buffer(contents)
-      file.path     = util.replaceExtension(file.path, '.css')
+      file.contents = new Buffer.from(contents)
+      file.path     = replaceExt(file.path, '.css')
 
       return callback(null, file)
     }
