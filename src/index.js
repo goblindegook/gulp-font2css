@@ -12,10 +12,15 @@ import PluginError from 'plugin-error'
 /**
  * Extract the `font-family` from the font's file name.
  * @param  {String} basename Font base filename.
+ * @param  {Int}    count    Count of guessed information to extract.
  * @return {String}          `font-family` property and value.
  */
-function getFontFamily(basename) {
-  return `font-family:"${basename.split('-').shift()}";`
+function getFontFamily(basename, count) {
+  const basenameParts = basename.split('-');
+  if (basenameParts.length === 1) {
+    return `font-family:"${basename}";`
+  }
+  return `font-family:"${basenameParts.slice(0, -count).join('-')}";`
 }
 
 /**
@@ -98,12 +103,19 @@ function font2css() {
     if (file.isBuffer()) {
       const basename = path.basename(file.path, path.extname(file.path))
 
-      const attributes = [
-        getFontFamily(basename),
-        guessFontStyle(basename),
-        guessFontWeight(basename),
-        getSrc(file)
-      ]
+      let attributes = []
+      const fontStyle = guessFontStyle(basename)
+      const fontWeight = guessFontWeight(basename)
+
+      if (fontStyle !== '') {
+        attributes.push(fontStyle)
+      }
+      if (fontWeight !== '') {
+        attributes.push(fontWeight)
+      }
+
+      attributes.push(getFontFamily(basename, attributes.length))
+      attributes.push(getSrc(file))
 
       const contents = `@font-face{${attributes.join('')}}`
 
