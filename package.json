@@ -1,6 +1,6 @@
 {
   "name": "gulp-font2css",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Encode font files as CSS using Gulp.",
   "repository": "goblindegook/gulp-font2css",
   "author": {
