@@ -17,7 +17,7 @@ import PluginError from 'plugin-error'
  */
 function getFontFamily(basename, count) {
   const basenameParts = basename.split('-');
-  if (basenameParts.length === 1) {
+  if (basenameParts.length === 1 || count === 0) {
     return `font-family:"${basename}";`
   }
   return `font-family:"${basenameParts.slice(0, -count).join('-')}";`
