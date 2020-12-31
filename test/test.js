@@ -55,6 +55,21 @@ test.cb('encodes font files to CSS', t => {
   t.context.stream.write(createFile(inputPath, input))
 })
 
+test.cb('encodes hyphenated font files to CSS', t => {
+  const inputPath    = path.join(__dirname, '/fixtures/test-font.woff')
+  const expectedPath = path.join(__dirname, '/fixtures/test-font.css')
+  const input        = fs.readFileSync(inputPath, 'utf8')
+  const expected     = fs.readFileSync(expectedPath, 'utf8')
+
+  t.context.stream.on('data', file => {
+    t.is(String(file.contents), expected)
+    t.end()
+  })
+
+  console.log('created', inputPath)
+  t.context.stream.write(createFile(inputPath, input))
+})
+
 test.cb('determines font-family', t => {
   t.context.stream.on('data', file => {
     t.is(getProperty(String(file.contents), 'font-family'), '"test"')
