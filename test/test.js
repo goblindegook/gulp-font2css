@@ -2,8 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import test from 'ava'
 import css from 'css'
-import util from 'gulp-util'
 import font2css from '../src'
+import Vinyl from 'vinyl'
 
 // HELPER FUNCTIONS
 
@@ -14,10 +14,10 @@ import font2css from '../src'
  * @return {Object}          File object.
  */
 function createFile(filepath, contents = '') {
-  return new util.File({
+  return new Vinyl({
     base:     path.dirname(filepath),
     path:     filepath,
-    contents: new Buffer(contents),
+    contents: new Buffer.from(contents),
   })
 }
 
@@ -52,6 +52,21 @@ test.cb('encodes font files to CSS', t => {
     t.end()
   })
 
+  t.context.stream.write(createFile(inputPath, input))
+})
+
+test.cb('encodes hyphenated font files to CSS', t => {
+  const inputPath    = path.join(__dirname, '/fixtures/test-font.woff')
+  const expectedPath = path.join(__dirname, '/fixtures/test-font.css')
+  const input        = fs.readFileSync(inputPath, 'utf8')
+  const expected     = fs.readFileSync(expectedPath, 'utf8')
+
+  t.context.stream.on('data', file => {
+    t.is(String(file.contents), expected)
+    t.end()
+  })
+
+  console.log('created', inputPath)
   t.context.stream.write(createFile(inputPath, input))
 })
 

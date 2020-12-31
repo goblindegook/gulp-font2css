@@ -33,7 +33,8 @@ gulp.task('fonts', function() {
 
 `<family>[-<weight>][-<style>].<extension>`
 
-Font weight should be one of `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`. You may also provide a [commonly used weight name](http://www.w3.org/TR/css3-fonts/#font-weight-numeric-values) (except `normal`) that maps to one of these values.
+* Font `<family>` can be hyphenated as long as there are no matching `<style>` or `<weight>` words in it.
+* Font weight should be one of `100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`. You may also provide a [commonly used weight name](http://www.w3.org/TR/css3-fonts/#font-weight-numeric-values) (except `normal`) that maps to one of these values.
 
 Font style should be one of `normal`, `italic` or `oblique`.
 
@@ -45,6 +46,7 @@ For example, the following are valid names:
 * `Lato-700.woff`
 * `Lato-thin-italic.woff`
 * `Lato-100-italic.woff`
+* `My-Lato-italic.woff`
 
 The plugin will ignore any unknown keywords.
 
